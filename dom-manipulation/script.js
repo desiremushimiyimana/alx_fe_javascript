@@ -1,7 +1,6 @@
 let quotes = [
     { text: "The only limit to our realization of tomorrow is our doubts of today.", category: "Motivation" },
     { text: "Life is what happens when you're busy making other plans.", category: "Life" },
-    // Add more quotes here
   ];
   
   // Load quotes from local storage
@@ -108,7 +107,7 @@ let quotes = [
     saveQuotes();
     populateCategories();
     filterQuotes();
-    alert('Quotes synced with server successfully!');
+    showNotification('Quotes synced with server successfully!');
   }
   
   // Periodically sync quotes with server
@@ -124,9 +123,7 @@ let quotes = [
     startPeriodicSync();
   }
   
-  document.getElementById('newQuote').addEventListener('click', showRandomQuote);
-  window.onload = init;
-
+  // Show notification
   function showNotification(message) {
     const notification = document.getElementById('notification');
     const notificationMessage = document.getElementById('notificationMessage');
@@ -134,20 +131,12 @@ let quotes = [
     notification.style.display = 'block';
   }
   
+  // Close notification
   function closeNotification() {
     const notification = document.getElementById('notification');
     notification.style.display = 'none';
   }
   
-  // Modify syncQuotes to show notifications
-  async function syncQuotes() {
-    const serverQuotes = await fetchQuotesFromServer();
-    const allQuotes = [...quotes, ...serverQuotes];
-    quotes = [...new Map(allQuotes.map(quote => [quote.text, quote])).values()]; // Remove duplicates
-    saveQuotes();
-    populateCategories();
-    filterQuotes();
-    showNotification('Quotes synced with server successfully!');
-  }
-  
+  document.getElementById('newQuote').addEventListener('click', showRandomQuote);
+  window.onload = init;
   
