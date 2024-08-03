@@ -17,7 +17,7 @@ let quotes = [
   }
   
   // Show a random quote
-  function showRandomQuote() {
+  function displayRandomQuote() {
     const randomIndex = Math.floor(Math.random() * quotes.length);
     const quote = quotes[randomIndex];
     document.getElementById('quoteDisplay').innerText = `"${quote.text}" - ${quote.category}`;
@@ -30,10 +30,7 @@ let quotes = [
     if (newQuoteText && newQuoteCategory) {
       quotes.push({ text: newQuoteText, category: newQuoteCategory });
       saveQuotes();
-      populateCategories();
-      filterQuotes();
-      document.getElementById('newQuoteText').value = '';
-      document.getElementById('newQuoteCategory').value = '';
+      displayRandomQuote();
       alert('Quote added successfully!');
     } else {
       alert('Please enter both quote text and category.');
@@ -115,14 +112,6 @@ let quotes = [
     setInterval(syncQuotes, 60000); // Sync every 60 seconds
   }
   
-  // Initialize the application
-  function init() {
-    loadQuotes();
-    populateCategories();
-    filterQuotes();
-    startPeriodicSync();
-  }
-  
   // Show notification
   function showNotification(message) {
     const notification = document.getElementById('notification');
@@ -137,6 +126,16 @@ let quotes = [
     notification.style.display = 'none';
   }
   
-  document.getElementById('newQuote').addEventListener('click', showRandomQuote);
+  // Initialize the application
+  function init() {
+    loadQuotes();
+    populateCategories();
+    filterQuotes();
+    startPeriodicSync();
+    displayRandomQuote();
+  }
+  
+  document.getElementById('newQuote').addEventListener('click', displayRandomQuote);
+  document.getElementById('addQuoteButton').addEventListener('click', addQuote);
   window.onload = init;
   
