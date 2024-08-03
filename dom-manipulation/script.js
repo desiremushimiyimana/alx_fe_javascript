@@ -126,4 +126,28 @@ let quotes = [
   
   document.getElementById('newQuote').addEventListener('click', showRandomQuote);
   window.onload = init;
+
+  function showNotification(message) {
+    const notification = document.getElementById('notification');
+    const notificationMessage = document.getElementById('notificationMessage');
+    notificationMessage.innerText = message;
+    notification.style.display = 'block';
+  }
+  
+  function closeNotification() {
+    const notification = document.getElementById('notification');
+    notification.style.display = 'none';
+  }
+  
+  // Modify syncQuotes to show notifications
+  async function syncQuotes() {
+    const serverQuotes = await fetchQuotesFromServer();
+    const allQuotes = [...quotes, ...serverQuotes];
+    quotes = [...new Map(allQuotes.map(quote => [quote.text, quote])).values()]; // Remove duplicates
+    saveQuotes();
+    populateCategories();
+    filterQuotes();
+    showNotification('Quotes synced with server successfully!');
+  }
+  
   
